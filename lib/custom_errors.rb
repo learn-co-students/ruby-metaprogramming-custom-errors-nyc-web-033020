@@ -7,7 +7,21 @@ class Person
 
   def get_married(person)
     self.partner = person
-    person.partner = self
+    if person.class != Person
+      begin
+        raise PartnerError
+      rescue PartnerError => error
+        puts error.message
+      end
+    else
+      person.partner = self
+    end
+  end
+
+  class PartnerError < StandardError
+    def message
+      'Argument must be an instance of Person class'
+    end
   end
 
 end
